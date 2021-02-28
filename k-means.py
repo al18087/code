@@ -5,10 +5,12 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
-def file_data():
+def file_data(file_num):
+    x = 100
+    y = 100
     fw = open("k-means_data.txt", "w", encoding="utf-8")
-    for i in range(0, 100):
-        data = [str(random.randint(0, 100)), " ", str(random.randint(0, 100)), " ", str(0), "\n"]
+    for i in range(0, file_num):
+        data = [str(random.randint(0, x)), " ", str(random.randint(0, y)), " ", str(0), "\n"]
         fw.writelines(data)
 
     fw.close()
@@ -29,19 +31,20 @@ def file_data():
 
 
 def clustering(n):
-    entire_data = file_data()
+    file_num = 200
+    entire_data = file_data(file_num)
     G = []
 
     #初期設定(重心の位置をランダムで決定する)
     for i in range(1, n+1):
-        index = random.randint(0, 99)
+        index = random.randint(0, file_num-1)
         entire_data[index][2] = i
         G.append(entire_data[index])
 
     
     while True:
         #各データのラベルを振り分ける
-        for i in range(0, 100):
+        for i in range(0, file_num):
             min_dis = 10000
             for j in range(0, n):
                 dis = math.sqrt((entire_data[i][0] - G[j][0])**2 + (entire_data[i][1] - G[j][1])**2)
@@ -116,9 +119,11 @@ def clustering(n):
     x4 = []
     y4 = []
     """
+    
     for each_label in Entire_label:
         for data in each_label:
 
+            
             #k = 3
             if data[2] == 1:
                 x1.append(data[0])
@@ -129,7 +134,7 @@ def clustering(n):
             else:
                 x3.append(data[0])
                 y3.append(data[1])
-
+            
             
             """
             #k = 4
@@ -154,6 +159,7 @@ def clustering(n):
     """
     plt.scatter(x4, y4, c="orange")
     """
+    
     plt.xlabel("X")
     plt.ylabel("Y")
     plt.title("Scatter Plot of clustering")
@@ -170,6 +176,8 @@ def clustering(n):
 
     fw.close()
 
+
+    
 clustering(3)
 
 
